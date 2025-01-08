@@ -1,4 +1,6 @@
-# animation-guidelines
+### **Animation Guidelines**
+
+---
 
 ### **1. Header Animations**
 
@@ -26,7 +28,7 @@
   }
   ```
 
-#### **2. Logo Entrance:**
+#### **Logo Entrance:**
 - **Effect**: Fade-in on page load with slight scaling.
 - **CSS Example**:
   ```css
@@ -45,10 +47,43 @@
 
 ---
 
+### **2. Hero Titles**
+
+#### **Effect**: Fade-in with upward motion on page load.
+- **CSS Example**:
+  ```css
+  .hero h1 {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInTitle 0.6s ease-in-out forwards;
+  }
+
+  .hero p {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInSubtitle 0.6s ease-in-out forwards 0.2s;
+  }
+
+  @keyframes fadeInTitle {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInSubtitle {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  ```
+
+---
+
 ### **3. Category Hover Animations**
 
-#### **Hover Effect**:
-- **Effect**: Scale up the card (1.03x) on hover. No shadow.
+#### **Effect**: Scale up the card (1.03x) on hover. No shadow.
 - **CSS Example**:
   ```css
   .category-card {
@@ -61,20 +96,38 @@
 
 ---
 
+### **4. Button Animations**
+
+#### **General Behavior**:  
+- Buttons follow defined states: Default, Hover, Focused, Active, and Disabled.  
+- Smooth transitions enhance the user experience.
 
 
-### **4. Button Animations Based on Button Instances**
+#### **Example CSS for Primary-Filled Buttons**:
+```css
+.button-primary {
+  background-color: #FFCC00;
+  color: #132446;
+  border: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
 
-#### **General Behavior**
-- All button animations should adhere to the defined states:
-  - **Default**
-  - **Hover**
-  - **Focused**
-  - **Active**
-  - **Disabled**
+.button-primary:hover {
+  background-color: #FFD580;
+  transform: scale(1.05);
+}
 
-Each state will follow the button styles (e.g., `Primary-Filled`, `Secondary-Filled`, etc.) with transitions to enhance the user experience.
-### **6. Image Animations**
+.button-primary:disabled {
+  background-color: #ddd;
+  color: #666;
+  cursor: not-allowed;
+}
+```
+
+---
+
+### **5. Image Animations**
 
 #### **Fade-in on Scroll**:
 - **Effect**: Images fade in as they enter the viewport.
@@ -92,44 +145,75 @@ Each state will follow the button styles (e.g., `Primary-Filled`, `Secondary-Fil
   ```
 
 #### **JavaScript to Trigger the Effect**:
-- **Code**:
-  ```javascript
-  const images = document.querySelectorAll('.image');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
-    });
+```javascript
+const images = document.querySelectorAll('.image');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
   });
+});
 
-  images.forEach(image => observer.observe(image));
-  ```
-
----
-
-### **7. Input Field Animations**
-
-#### **Focus Effect**:
-- **Effect**: Border changes to 3px yellow solid (#FFCC00) on focus.
-- **CSS Example**:
-  ```css
-  input, textarea {
-    border: 1px solid #ccc;
-    transition: border-color 0.2s ease-in-out, border-width 0.2s ease-in-out;
-  }
-  input:focus, textarea:focus {
-    border: 3px solid #FFCC00;
-    outline: none;
-  }
-  ```
+images.forEach(image => observer.observe(image));
+```
 
 ---
 
-### **General Guidelines**
+### **6. Inputs**
 
-1. **Timing**: All animations should take 200-300ms for smooth, consistent transitions.
-2. **Performance**: Use CSS animations over JavaScript where possible.
-3. **Accessibility**: Offer a reduced motion option for users who prefer minimal animations.
+#### **UI Elements:**
+- Text Inputs  
+- Textarea  
+- Search Bar  
+- Password Fields  
+- Dropdowns  
+- Checkboxes  
+- Radio Buttons  
+- File Uploads   
+- Date Pickers  
+- Range Sliders  
+
+#### **Animations for Inputs**:
+
+#### **Default State**:
+- Borders and backgrounds should adapt to the surrounding context (e.g., contrasting borders on dark/light backgrounds).  
+- Maintain clear text readability.  
+- No scaling or shadow effects.  
+
+#### **Focus State**:
+- Border changes to `#FFB30C` (yellow) for contrast with brand colors.  
+- Slight scaling (`scale(1.02)`) for interactive emphasis.  
+
+#### **Disabled State**:
+- Grayed-out appearance with `#ddd` border.  
+- No focus or hover effect.  
 
 ---
+
+#### **Example CSS**:
+```css
+input, textarea, select {
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+input:focus, textarea:focus, select:focus {
+  border: 3px solid #FFB30C; /* Yellow focus border */
+  transform: scale(1.02); /* Slight scaling */
+}
+
+input:disabled, textarea:disabled, select:disabled {
+  border: 1px solid #ddd; /* Gray border for disabled state */
+  background-color: #f1f1f1;
+}
+```
+
+---
+
+### **7. General Guidelines**
+- **Timing**: All animations should take 200-300ms for smooth, consistent transitions.
+- **Performance**: Use CSS animations over JavaScript where possible to ensure optimal performance.
+- **Accessibility**: Provide reduced motion options for users who prefer minimal animations using `@media (prefers-reduced-motion: reduce)`.
+
+
